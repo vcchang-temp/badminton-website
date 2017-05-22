@@ -1,42 +1,8 @@
 /* 
-
-	This file contains the "class"/object defintions for the badminton places; 
+	This file contains the class defintions for the badminton places and 
 	functionality for filtering the badminton places
 
-TODO's
-
-DONE 1. 	Finish creating badminton-place data variables: Ace Badminton, Badminton Vancouver and comm centres remaining 
-	*Note: for second project iteration, data will be placed in database
-DONE 2. 	Make two functions in time "class" that determines if given time 
-	isAfter (session end-time) or isBefore (session start-time)
-DONE 3. 	Make a "class" for storing user input (from search section)
-4. 	Make function(s) that will find the user places to play with user input object parameter
-	a. Make function that will filter by drop-in
-	b. Make function that will filter by court rental
-	c. Make function that will filter by start time
-	d. Make function that will filter by racket/shoe rental
-	e. Make function that will filter by community centre
-	*Note: for second project iteration, will add Vancouver and potentially more cities in the Lower Mainland
-
-eg: 
-
-// let dropInRProSessions = richmondProSessions.filter(
-// 	function(session) {
-// 		return session.isDropIn;
-// 	});
-
-// function findPlacesToPlay(userInput) {
-// 	//...
-// }
-
-// function filterByStartTime(time) {
-
-// }
-
-*/
-
-
-/* FUNCTION DEFINITIONS */
+/* DEFINITIONS */
 
 // time constructor
 function Time (numHours) {
@@ -44,8 +10,6 @@ function Time (numHours) {
 	this.numHours = numHours;
 
 }
-
-// difference btw creating a global function vs. a function attached to a prototype?
 
 // determines if this time is before user-input time; if so and if isAfter is true, session can be displayed
 Time.prototype.isBefore = function (userTime) {
@@ -61,21 +25,6 @@ Time.prototype.isAfter = function (userTime) {
 
 }
 
-// Time.prototype.convertTo24HrClockTime = function (amPm) {
-
-// 	if (amPm == "pm" && this.numHours < 1200) {
-
-// 		return this.numHours += 1200;
-
-// 	} 
-
-// 	if (amPm == "am" && this.numHours == 1200) {
-
-// 		return this.numHours += 1200;
-
-// 	}
-
-// }
 
 function TimePeriod (startTime, endTime) {
 
@@ -138,10 +87,8 @@ function UserInput (day, time, amPm, location, wantsDropIn, wantsCourtRental, wa
 
 
 
-/* 	BADMINTON PLACE DATA 
-	
+/* 	BADMINTON PLACE DATA 	
 	Note: to be put in a database
-
 */
 
 // Richmond Pro drop-in
@@ -756,8 +703,6 @@ var stage18 = new BadmintonPlace("Stage 18 Badminton Centre", "#170-2351 No 6 Rd
 console.log(stage18);
 
 
-
-
 // Ace drop-in
 
 // Mon
@@ -1293,42 +1238,21 @@ var cityCentreCommCentre_Anderson = new BadmintonPlace("City Centre Community Ce
 console.log(cityCentreCommCentre_Anderson);
 
 
-// Time functions tests
-var testUserInput = new Time(1600);
-var result1 = satTimePeriod_CTYCCAND.startTime.isBefore(testUserInput);
-var result2 = satTimePeriod_CTYCCAND.endTime.isAfter(testUserInput);
-
-
-
 
 /* GLOBAL VARIABLES */
 
-var badmintonPlacesArray = [richmondPro, clearOne, drive, stage18, ace, badmintonVancouver, 
-							cambieCommCentre, stevestonCommCentre, stevestonCommCentre,
-							southArmCommCentre, thompsonCommCentre, westRichmondCommCentre,
-							westRichmondCommCentre_HughBoyd, cityCentreCommCentre_Anderson];
+var badmintonPlaces = [richmondPro, clearOne, drive, stage18, ace, badmintonVancouver, 
+						cambieCommCentre, stevestonCommCentre, stevestonCommCentre,
+						southArmCommCentre, thompsonCommCentre, westRichmondCommCentre,
+						westRichmondCommCentre_HughBoyd, cityCentreCommCentre_Anderson];
 var userInput;
-var results = badmintonPlacesArray;
-
-// let dropInRProSessions = richmondProSessions.filter(
-// 	function(session) {
-// 		return session.isDropIn;
-// 	});
-
-// function findPlacesToPlay(userInput) {
-// 	//...
-// }
-
-// function filterByStartTime(time) {
-
-// }
 
 
 /* FUNCTIONALITY THAT BEGINS WHEN USER HITS SUBMIT */
 
 /* Helper functions */
-
-function findPlacesToPlay(userInput) {
+// filter sessions by day first, then filter by time, then filter places that don't have any sessions left
+function findPlacesToPlay(results, userInput) {
 
 	if (!userInput.includeCommCentres) {
 
@@ -1352,7 +1276,7 @@ function findPlacesToPlay(userInput) {
 	}
 
 
-	// filter sessions by day first, then filter by time, then filter places that don't have any sessions left
+	
 	if (userInput.wantsDropIn && userInput.wantsCourtRental) {
 		
 		results.forEach(function(badmintonPlace) {
@@ -1472,32 +1396,51 @@ function findPlacesToPlay(userInput) {
 	
 }
 
-/*	populate UserInput object upon user submission */
 
 $("#submitButton").click(function() {
 
-	var date = "";
-	var day = "";
-	var time = "";
-	var amPm = "";
-	var location = "";
-	var wantsDropIn = "";
-	var wantsCourtRental = "";
-	var wantsRacketShoeRental = "";
-	var includeCommCentres = "";
-	var errorMsg = "";
-	var currDate = new Date();
-	var currDayInMonth = currDate.getDate();
-	var currMonth = currDate.getMonth();
-	var currTime = currDate.getHours();
+	var date;
+	var day;
+	var time;
+	var amPm;
+	var location;
+	var wantsDropIn;
+	var wantsCourtRental;
+	var wantsRacketShoeRental;
+	var includeCommCentres;
+	var errorMsg;
+	var currDate;
+	var currDayInMonth;
+	var currMonth;
+	var currTime;
+	var results;
 
-	function reset() {
 
+	function initialize() {
+
+		date = "";
+		day = "";
+		time = "";
+		amPm = "";
+		location = "";
+		wantsDropIn = "";
+		wantsCourtRental = "";
+		wantsRacketShoeRental = "";
+		includeCommCentres = "";
+		errorMsg = "";
+		currDate = new Date();
+		currDayInMonth = currDate.getDate();
+		currMonth = currDate.getMonth();
+		currTime = currDate.getHours();
+		results = badmintonPlaces.slice();
 		$("#errorMsg").html(errorMsg);
 
 	}
 
-	reset();
+	initialize();
+
+	console.log(badmintonPlaces);
+	console.log(results);
 
 	date = $("#calendar").datepicker("getDate");
 
@@ -1553,7 +1496,7 @@ $("#submitButton").click(function() {
 		userInput = new UserInput(dayOfWeek, time, amPm, location, wantsDropIn, 
 		wantsCourtRental, wantsRacketShoeRental, includeCommCentres);
 
-		results = findPlacesToPlay(userInput);
+		results = findPlacesToPlay(results, userInput);
 
 		console.log(results);
 		
