@@ -1,0 +1,150 @@
+/*
+
+	This file contains the styling of the badminton website. 
+
+TODO's
+
+1. 	Fix navbar spacing from the right margin in laptop screem size
+2. 	Fix navbar logo "playbadminton.ca" spacing from the navbar shuttlecock brand in laptop screen size
+3. 	Center left-aligned main-page slogan in div next to badminton-player icon; center button under text
+4. 	Fix spacing under badminton-player icon in mobile
+
+*/
+
+
+
+body {
+
+	font-family: "Cambay", sans-serif;
+
+}
+
+/* Navbar styling */
+
+.navbar-light {
+
+	font-family: "Spinnaker", sans-serif;
+	font-size: 20px;
+	background-color: #FFA300;
+
+}
+
+.navbar-light .navbar-toggler-icon {
+
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+
+}
+
+#shuttlecock-img {
+
+	position: relative;
+	float: left;
+	width: 70px;
+	height: 70px;
+	margin: 10px 10px 30px 10px;
+
+}
+
+#playbadminton-link {
+
+	color: white;
+	float: left;
+	margin: 33px 0 0 15px;
+
+}
+
+
+#navbarSupportedContent {
+
+	width: 1400px;
+
+}
+
+.nav-link {
+
+	margin-left: 35px;
+
+}
+
+.navbar .navbar-collapse .navbar-nav .nav-item a {
+
+	color: white;
+
+}
+
+.navbar .navbar-collapse .navbar-nav .nav-item a:hover {
+
+	color: black;
+
+}
+
+
+/* Front section styling */
+
+#front-section {
+
+	width: 100%;
+	height: 75%;
+	background-color: #FFA300;
+
+}
+
+.badminton-player-style {
+
+	fill: white;
+
+}
+
+#find-places-front-button {
+
+	width: 300px;
+	height: 50px;
+	color: white;
+	font-family: "Cambay", sans-serif;
+	font-size: 25px;
+	padding-top: 8px;
+	background-color: #00AF8E;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 8px 8px 0 rgba(0,0,0,0.1), 0 4px 4px 0 rgba(0,0,0,0.10);
+
+}
+
+#front-header-div {
+
+	height: 25%;
+	width: 100%;
+
+}
+
+#front-header {
+
+	margin-top: 25%;
+
+}
+
+#find-places-button-div {
+
+	margin-top: 25px;
+
+}
+
+
+/* Selection section */
+
+#search-section {
+
+	width: 100%;
+	padding: 40px 0px 40px 60px;
+	background-color: #70E5DB;
+
+}
+
+#errorMsg {
+
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 20px;
+	color: #1E8089;
+
+}
